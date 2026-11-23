@@ -9,8 +9,6 @@ Results are published as they come, good or bad. Every forecast is fingerprinted
 
 Powered by **[evenstocks.com](https://evenstocks.com/?utm_source=github&utm_medium=readme&utm_campaign=stockjection&utm_content=top_link)**
 
-[![Interactive leaderboard](https://img.shields.io/badge/Open-interactive_leaderboard-00805E?style=for-the-badge)](https://taruntiwarihp.github.io/stockjection/)
-[![Get early access](https://img.shields.io/badge/Get_early_access-daily_forecasts-00805E?style=for-the-badge)](https://github.com/taruntiwarihp/stockjection/issues/new?template=early-access.yml)
 [![Visit Evenstocks](https://img.shields.io/badge/Visit-evenstocks.com-12231D?style=for-the-badge)](https://evenstocks.com/?utm_source=github&utm_medium=readme&utm_campaign=stockjection&utm_content=top_button)
 
 [![GitHub stars](https://img.shields.io/github/stars/taruntiwarihp/stockjection?style=flat-square&label=stars&color=00805E)](https://github.com/taruntiwarihp/stockjection/stargazers)
@@ -61,7 +59,6 @@ rank correlation between a model's score and each stock's next return relative t
 | 8 | Random score | 0.0004 | 0.0008 | 0.0025 | 49.9 % | −0.285 (−7.9) |
 | – | 9 pretrained AI forecasters (Chronos-2, TimesFM-3, Moirai-2, TiRex, Sundial, Toto, Kronos, Time-MoE, …) | no skill: none beat a "no change" forecast; about 50 % direction | | | | |
 
-**[Open the interactive leaderboard](https://taruntiwarihp.github.io/stockjection/)**: switch between 1, 5 and 20 days, hover for details, sort every column.
 Full table with per-year results: [leaderboard/LEADERBOARD.md](leaderboard/LEADERBOARD.md).
 
 **Read this with care**
@@ -128,7 +125,6 @@ evaluated on the same rows and rules, it goes on the board, including if it beat
 ## Stay in the loop
 
 - **Star this repository** to follow the live results as they land.
-- **[Request early access](https://github.com/taruntiwarihp/stockjection/issues/new?template=early-access.yml)** to daily forecasts when they open up.
 - **[Visit evenstocks.com](https://evenstocks.com/?utm_source=github&utm_medium=readme&utm_campaign=stockjection&utm_content=footer_link)**: research for Indian investors, by the team behind Stockjection.
 
 ## Not investment advice
