@@ -1,0 +1,33 @@
+name,group,h,ic_trad,ic_trad_t,ic_2024,ic_2025,ic,calls,book,book_t
+"Stockjection, live",Stockjection,1,0.11424,25.99751,0.12787,0.09608,0.12558,0.59207,0.00346,6.6643
+"Stockjection, next version (shadow test)",Stockjection,1,0.12372,26.32224,0.13584,0.10759,0.13406,0.60531,0.0038,7.58875
+Microsoft Qlib DoubleEnsemble,Outside method,1,0.10148,17.82718,0.10932,0.09103,0.10994,0.57561,0.00214,4.0022
+"LightGBM, standard inputs",Outside method,1,0.09968,18.78231,0.11097,0.08465,0.11021,0.56858,0.00134,2.23187
+"Reversal, 1 day",Public factor / baseline,1,0.0354,7.83895,0.04101,0.02793,0.04073,0.50298,-0.00485,-7.36865
+"Reversal, 1 week",Public factor / baseline,1,0.0244,5.16671,0.03159,0.01483,0.03255,0.49717,-0.00309,-5.27036
+"Reversal, 1 month",Public factor / baseline,1,0.01597,3.06973,0.02223,0.00764,0.01368,0.49159,-0.00223,-4.25003
+"Momentum, 12-1 months",Public factor / baseline,1,-0.00715,-1.49184,-0.0141,0.0021,-0.00492,0.51124,-0.00323,-6.55559
+Near 52-week high,Public factor / baseline,1,0.0129,2.46073,0.0064,0.02156,0.01821,0.54135,-0.00333,-6.60046
+Low volatility factor,Public factor / baseline,1,0.06189,8.97948,0.0648,0.05802,0.06095,0.53219,-0.00074,-1.70623
+Random score,Public factor / baseline,1,0.00042,0.23882,0.00254,-0.00241,0.00108,0.49855,-0.00285,-7.86418
+"Stockjection, live",Stockjection,5,0.10878,11.39619,0.12554,0.08645,0.12603,0.5969,,
+"Stockjection, next version (shadow test)",Stockjection,5,0.11405,11.92776,0.12891,0.09427,0.13064,0.60462,,
+Microsoft Qlib DoubleEnsemble,Outside method,5,0.09018,8.85654,0.09858,0.07901,0.10409,0.57601,,
+"LightGBM, standard inputs",Outside method,5,0.09559,9.34437,0.10887,0.07792,0.10998,0.57952,,
+"Reversal, 1 day",Public factor / baseline,5,0.0256,5.53033,0.02655,0.02433,0.03527,0.49121,,
+"Reversal, 1 week",Public factor / baseline,5,0.02553,3.78196,0.02632,0.02448,0.03682,0.49985,,
+"Reversal, 1 month",Public factor / baseline,5,0.01131,1.27247,0.00426,0.02071,0.01211,0.49312,,
+"Momentum, 12-1 months",Public factor / baseline,5,0.00232,0.23043,-0.00031,0.00583,0.00601,0.52416,,
+Near 52-week high,Public factor / baseline,5,0.02114,2.16597,0.02693,0.01342,0.02643,0.56082,,
+Low volatility factor,Public factor / baseline,5,0.05813,4.98534,0.05575,0.06131,0.06122,0.53426,,
+Random score,Public factor / baseline,5,0.00083,0.46491,0.00072,0.00098,0.00187,0.49985,,
+"Stockjection, live",Stockjection,20,0.12349,5.4333,0.14972,0.08855,0.13694,0.59024,,
+Microsoft Qlib DoubleEnsemble,Outside method,20,0.10032,4.24873,0.11571,0.07984,0.11053,0.57425,,
+"LightGBM, standard inputs",Outside method,20,0.10576,4.34948,0.12588,0.07896,0.11776,0.5805,,
+"Reversal, 1 day",Public factor / baseline,20,0.00588,1.36471,0.00608,0.00563,0.00966,0.49441,,
+"Reversal, 1 week",Public factor / baseline,20,0.0066,0.77554,0.0002,0.01511,0.00964,0.48169,,
+"Reversal, 1 month",Public factor / baseline,20,0.01503,0.99791,-0.00859,0.0465,0.00842,0.48675,,
+"Momentum, 12-1 months",Public factor / baseline,20,-0.00067,-0.0335,-0.00481,0.00485,0.01318,0.51103,,
+Near 52-week high,Public factor / baseline,20,0.0318,1.68593,0.04419,0.0153,0.04318,0.58298,,
+Low volatility factor,Public factor / baseline,20,0.08561,4.46411,0.06575,0.11206,0.08365,0.54626,,
+Random score,Public factor / baseline,20,0.0025,1.87445,0.00139,0.00398,0.00271,0.49946,,

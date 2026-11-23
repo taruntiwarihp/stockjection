@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stockjection leaderboard</title>
+<meta name="description" content="Stockjection: AI stock ranking for Indian equities, tested in the open. Interactive leaderboard against Qlib, LightGBM, AI forecasting models and public factors. Powered by evenstocks.com.">
+<meta property="og:title" content="Stockjection: AI stock ranking for Indian equities, tested in the open">
+<meta property="og:description" content="Beats every open benchmark we tested on NSE stocks. 223 experiments, failures included. Powered by evenstocks.com.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--card:#f6f9f7;--ink:#12231d;--muted:#55665f;--line:#dfe7e3;--hi:#00805e;--hi-soft:#e6f4ef;--lo:#7d8884;--neg:#c02436}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1117;--card:#161b22;--ink:#e6edf3;--muted:#9aa7a2;--line:#2a323a;--hi:#2cc294;--hi-soft:#10261f;--lo:#5e6b67;--neg:#ff7a85}}
+:root[data-theme="dark"]{--bg:#0d1117;--card:#161b22;--ink:#e6edf3;--muted:#9aa7a2;--line:#2a323a;--hi:#2cc294;--hi-soft:#10261f;--lo:#5e6b67;--neg:#ff7a85}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--hi)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:48px 0 24px;border-bottom:1px solid var(--line)}
+.brand{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:44px;line-height:1.1;margin:8px 0 12px;letter-spacing:-.02em}
+.lede{font-size:19px;color:var(--muted);max-width:760px;margin:0 0 22px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;padding:11px 18px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--card)}
+.btn.primary{background:var(--hi);border-color:var(--hi);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+section{padding:36px 0;border-bottom:1px solid var(--line)}
+h2{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 18px;max-width:820px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stat b{display:block;font-size:28px;letter-spacing:-.02em}
+.stat span{color:var(--muted);font-size:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:0 0 16px}
+.seg button{font:inherit;font-weight:600;padding:8px 16px;border:0;background:var(--card);color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--hi);color:#fff}
+.chart{position:relative}
+.row{display:grid;grid-template-columns:minmax(150px,300px) 1fr;align-items:center;gap:12px;min-height:40px;cursor:default}
+.row .lab{text-align:right;font-size:15px}
+.row.me .lab{font-weight:700}
+.track{position:relative;height:26px;margin-right:64px}
+.zero{position:absolute;top:-4px;bottom:-4px;width:1px;background:var(--muted)}
+.bar{position:absolute;top:0;height:26px;border-radius:0 4px 4px 0;background:var(--lo);transition:width .35s ease,left .35s ease}
+.bar.neg{border-radius:4px 0 0 4px}
+.row.me .bar{background:var(--hi)}
+.row.part .bar{opacity:.45}
+.row.part .lab{font-weight:400}
+.val{position:absolute;top:3px;font-size:13px;color:var(--muted);white-space:nowrap;transition:left .35s ease}
+.row.me .val{color:var(--ink);font-weight:600}
+.row:hover .bar{filter:brightness(1.12)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 12px;border-radius:8px;font-size:13px;line-height:1.45;opacity:0;transition:opacity .12s;max-width:300px;z-index:5}
+.note{color:var(--muted);font-size:14px;margin-top:14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{cursor:pointer;user-select:none;color:var(--muted);font-weight:600}
+th[aria-sort]::after{content:" \25BE"}th[aria-sort="ascending"]::after{content:" \25B4"}
+tr.me td{font-weight:600}tr.me td:first-child{border-left:3px solid var(--hi)}
+.tablewrap{overflow-x:auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.step h3{margin:0 0 6px;font-size:16px}.step p{margin:0;color:var(--muted);font-size:14px}
+.step.hi{border-color:var(--hi);background:var(--hi-soft)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:8px 0}
+summary{cursor:pointer;font-weight:600}
+footer{padding:28px 0 48px;color:var(--muted);font-size:14px}
+.theme{float:right;font:inherit;font-size:13px;background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:4px 10px;cursor:pointer}
+@media (max-width:640px){h1{font-size:32px}.row{grid-template-columns:120px 1fr}.row .lab{font-size:13px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <button class="theme" id="theme" type="button">Theme</button>
+  <div class="brand">Powered by <a href="https://evenstocks.com/?utm_source=github_pages&utm_medium=site&utm_campaign=stockjection&utm_content=brand">evenstocks.com</a></div>
+  <h1>Stockjection</h1>
+  <p class="lede">AI stock ranking for Indian equities, tested in the open. Every evening it ranks about 4,000 NSE stocks for the next day, week and month. Every result is published, including the ones that fail.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://github.com/taruntiwarihp/stockjection/issues/new?template=early-access.yml">Get early access</a>
+    <a class="btn" href="https://github.com/taruntiwarihp/stockjection">Star on GitHub</a>
+    <a class="btn" href="https://evenstocks.com/?utm_source=github_pages&utm_medium=site&utm_campaign=stockjection&utm_content=hero_button">Visit evenstocks.com</a>
+  </div>
+</div></header>
+
+<section><div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>0.1142</b><span>live 1-day rank IC on tradable NSE stocks (Qlib DoubleEnsemble: 0.1015)</span></div>
+    <div class="stat"><b>59.2 %</b><span>of top and bottom 2 % calls right (random: 49.9 %)</span></div>
+    <div class="stat"><b>+0.346 %</b><span>a day, 5 long + 5 short backtest after costs</span></div>
+    <div class="stat"><b>223</b><span>experiments, rules written first: 44 pass, 152 fail</span></div>
+  </div>
+</div></section>
+
+<section id="board"><div class="wrap">
+  <h2>Leaderboard</h2>
+  <p class="sub">Same NSE stocks (Rs 10 crore+ a day), same dates (Jan 2024 to Sep 2025), same rules. Rank IC = how well a model orders stocks by their next return relative to the market; higher is better, 0 = no skill. Hover a bar for details.</p>
+  <div class="seg" role="group" aria-label="Horizon">
+    <button type="button" data-h="1" aria-pressed="true">1 day</button>
+    <button type="button" data-h="5" aria-pressed="false">5 days</button>
+    <button type="button" data-h="20" aria-pressed="false">20 days</button>
+  </div>
+  <div class="chart" id="chart"></div>
+  <div class="tip" id="tip"></div>
+  <p class="note">Nine pretrained AI forecasting models (Chronos-2, TimesFM-3, Moirai-2, TiRex, Sundial, Toto, Kronos, Time-MoE and others) showed no skill on NSE stocks. "Next version" rows were chosen on these same dates, so their lead is optimistic. Private and commercial models publish no comparable record.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Full table</h2>
+  <p class="sub">Click a column to sort. Paper universe = stocks a paper book can trade.</p>
+  <div class="tablewrap"><table id="tbl"><thead><tr>
+    <th data-k="name">Model</th><th data-k="ic_trad" aria-sort="descending">IC paper universe</th><th data-k="ic_2024">IC 2024</th><th data-k="ic_2025">IC 2025</th><th data-k="ic">IC all stocks</th><th data-k="calls">Calls right</th><th data-k="book">Book % / day</th>
+  </tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>How it works</h2>
+  <p class="sub">A ranking model: it does not guess prices, it orders stocks by how they are likely to do relative to the market. The model design, inputs and settings are proprietary.</p>
+  <div class="steps">
+    <div class="step"><h3>1. Market data</h3><p>Price and volume history, corporate events and market structure, each as it was known that day.</p></div>
+    <div class="step"><h3>2. AI ensemble</h3><p>Several complementary models trained on the whole market, retrained on a fixed schedule and tested before every change.</p></div>
+    <div class="step hi"><h3>3. Daily ranking</h3><p>One score per stock for about 4,000 NSE stocks, 1, 5 and 20 sessions ahead.</p></div>
+    <div class="step"><h3>4. Freeze and prove</h3><p>Frozen before the open, SHA-256 fingerprint published, file revealed about a month later so anyone can verify it.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Live track record</h2>
+  <p class="sub">Live results matter more than any backtest, so they are published as they come, good or bad.</p>
+  <details open><summary>Paper trading since 17 Nov 2026: -3.3 % after 5 sessions</summary><p>5 longs + 5 shorts a day, Rs 1 lakh, real prices and costs. A poor start: only 2.3 % of 5-day stretches in the backtest were this bad. A test of a liquidity floor and a stop-loss on 2024-25 data did not improve the book, so the rules stay unchanged. A fair verdict needs 20 to 30 sessions (late December).</p></details>
+  <details><summary>Shadow test of the next version: 1 scored day</summary><p>The next version runs every night next to the live model without changing anything published. A switch needs at least 10 scored days.</p></details>
+  <details><summary>Forecast proof: how to verify a forecast</summary><p>Every forecast's SHA-256 fingerprint is committed to the repository before the next market open. About a month later the exact file is published; run <code>sha256sum</code> on it and compare. <a href="https://github.com/taruntiwarihp/stockjection/blob/main/forecasts/README.md">Details</a>.</p></details>
+  <details><summary>Why trust these numbers?</summary><p>Every experiment's pass / fail rule is written before it runs, no model is scored on dates it trained on, costs are in every money result, statistics account for day-to-day dependence, and failures are counted in the <a href="https://github.com/taruntiwarihp/stockjection/blob/main/research/RESULTS.md">experiment record</a>.</p></details>
+</div></section>
+
+<footer><div class="wrap">
+  <p><b>Not investment advice.</b> Stockjection is research. Nothing here is a recommendation to buy, sell or hold any security, and nothing here is a target price. We are not registered with SEBI as investment advisers or research analysts. Past and simulated results do not guarantee future results.</p>
+  <p>Stockjection, powered by <a href="https://evenstocks.com/?utm_source=github_pages&utm_medium=site&utm_campaign=stockjection&utm_content=footer">evenstocks.com</a> · <a href="https://github.com/taruntiwarihp/stockjection">GitHub</a> · Text and data CC BY 4.0</p>
+</div></footer>
+
+<script>
+const DATA = [{"name": "Stockjection, live", "h": 1, "ic_trad": 0.11424, "ic_trad_t": 25.99751, "ic_2024": 0.12787, "ic_2025": 0.09608, "ic": 0.12558, "calls": 0.59207, "book": 0.00346, "me": true}, {"name": "Stockjection, next version (shadow test)", "h": 1, "ic_trad": 0.12372, "ic_trad_t": 26.32224, "ic_2024": 0.13584, "ic_2025": 0.10759, "ic": 0.13406, "calls": 0.60531, "book": 0.0038, "me": true}, {"name": "Microsoft Qlib DoubleEnsemble", "h": 1, "ic_trad": 0.10148, "ic_trad_t": 17.82718, "ic_2024": 0.10932, "ic_2025": 0.09103, "ic": 0.10994, "calls": 0.57561, "book": 0.00214, "me": false}, {"name": "LightGBM, standard inputs", "h": 1, "ic_trad": 0.09968, "ic_trad_t": 18.78231, "ic_2024": 0.11097, "ic_2025": 0.08465, "ic": 0.11021, "calls": 0.56858, "book": 0.00134, "me": false}, {"name": "Reversal, 1 day", "h": 1, "ic_trad": 0.0354, "ic_trad_t": 7.83895, "ic_2024": 0.04101, "ic_2025": 0.02793, "ic": 0.04073, "calls": 0.50298, "book": -0.00485, "me": false}, {"name": "Reversal, 1 week", "h": 1, "ic_trad": 0.0244, "ic_trad_t": 5.16671, "ic_2024": 0.03159, "ic_2025": 0.01483, "ic": 0.03255, "calls": 0.49717, "book": -0.00309, "me": false}, {"name": "Reversal, 1 month", "h": 1, "ic_trad": 0.01597, "ic_trad_t": 3.06973, "ic_2024": 0.02223, "ic_2025": 0.00764, "ic": 0.01368, "calls": 0.49159, "book": -0.00223, "me": false}, {"name": "Momentum, 12-1 months", "h": 1, "ic_trad": -0.00715, "ic_trad_t": -1.49184, "ic_2024": -0.0141, "ic_2025": 0.0021, "ic": -0.00492, "calls": 0.51124, "book": -0.00323, "me": false}, {"name": "Near 52-week high", "h": 1, "ic_trad": 0.0129, "ic_trad_t": 2.46073, "ic_2024": 0.0064, "ic_2025": 0.02156, "ic": 0.01821, "calls": 0.54135, "book": -0.00333, "me": false}, {"name": "Low volatility factor", "h": 1, "ic_trad": 0.06189, "ic_trad_t": 8.97948, "ic_2024": 0.0648, "ic_2025": 0.05802, "ic": 0.06095, "calls": 0.53219, "book": -0.00074, "me": false}, {"name": "Random score", "h": 1, "ic_trad": 0.00042, "ic_trad_t": 0.23882, "ic_2024": 0.00254, "ic_2025": -0.00241, "ic": 0.00108, "calls": 0.49855, "book": -0.00285, "me": false}, {"name": "Stockjection, live", "h": 5, "ic_trad": 0.10878, "ic_trad_t": 11.39619, "ic_2024": 0.12554, "ic_2025": 0.08645, "ic": 0.12603, "calls": 0.5969, "book": null, "me": true}, {"name": "Stockjection, next version (shadow test)", "h": 5, "ic_trad": 0.11405, "ic_trad_t": 11.92776, "ic_2024": 0.12891, "ic_2025": 0.09427, "ic": 0.13064, "calls": 0.60462, "book": null, "me": true}, {"name": "Microsoft Qlib DoubleEnsemble", "h": 5, "ic_trad": 0.09018, "ic_trad_t": 8.85654, "ic_2024": 0.09858, "ic_2025": 0.07901, "ic": 0.10409, "calls": 0.57601, "book": null, "me": false}, {"name": "LightGBM, standard inputs", "h": 5, "ic_trad": 0.09559, "ic_trad_t": 9.34437, "ic_2024": 0.10887, "ic_2025": 0.07792, "ic": 0.10998, "calls": 0.57952, "book": null, "me": false}, {"name": "Reversal, 1 day", "h": 5, "ic_trad": 0.0256, "ic_trad_t": 5.53033, "ic_2024": 0.02655, "ic_2025": 0.02433, "ic": 0.03527, "calls": 0.49121, "book": null, "me": false}, {"name": "Reversal, 1 week", "h": 5, "ic_trad": 0.02553, "ic_trad_t": 3.78196, "ic_2024": 0.02632, "ic_2025": 0.02448, "ic": 0.03682, "calls": 0.49985, "book": null, "me": false}, {"name": "Reversal, 1 month", "h": 5, "ic_trad": 0.01131, "ic_trad_t": 1.27247, "ic_2024": 0.00426, "ic_2025": 0.02071, "ic": 0.01211, "calls": 0.49312, "book": null, "me": false}, {"name": "Momentum, 12-1 months", "h": 5, "ic_trad": 0.00232, "ic_trad_t": 0.23043, "ic_2024": -0.00031, "ic_2025": 0.00583, "ic": 0.00601, "calls": 0.52416, "book": null, "me": false}, {"name": "Near 52-week high", "h": 5, "ic_trad": 0.02114, "ic_trad_t": 2.16597, "ic_2024": 0.02693, "ic_2025": 0.01342, "ic": 0.02643, "calls": 0.56082, "book": null, "me": false}, {"name": "Low volatility factor", "h": 5, "ic_trad": 0.05813, "ic_trad_t": 4.98534, "ic_2024": 0.05575, "ic_2025": 0.06131, "ic": 0.06122, "calls": 0.53426, "book": null, "me": false}, {"name": "Random score", "h": 5, "ic_trad": 0.00083, "ic_trad_t": 0.46491, "ic_2024": 0.00072, "ic_2025": 0.00098, "ic": 0.00187, "calls": 0.49985, "book": null, "me": false}, {"name": "Stockjection, live", "h": 20, "ic_trad": 0.12349, "ic_trad_t": 5.4333, "ic_2024": 0.14972, "ic_2025": 0.08855, "ic": 0.13694, "calls": 0.59024, "book": null, "me": true}, {"name": "Microsoft Qlib DoubleEnsemble", "h": 20, "ic_trad": 0.10032, "ic_trad_t": 4.24873, "ic_2024": 0.11571, "ic_2025": 0.07984, "ic": 0.11053, "calls": 0.57425, "book": null, "me": false}, {"name": "LightGBM, standard inputs", "h": 20, "ic_trad": 0.10576, "ic_trad_t": 4.34948, "ic_2024": 0.12588, "ic_2025": 0.07896, "ic": 0.11776, "calls": 0.5805, "book": null, "me": false}, {"name": "Reversal, 1 day", "h": 20, "ic_trad": 0.00588, "ic_trad_t": 1.36471, "ic_2024": 0.00608, "ic_2025": 0.00563, "ic": 0.00966, "calls": 0.49441, "book": null, "me": false}, {"name": "Reversal, 1 week", "h": 20, "ic_trad": 0.0066, "ic_trad_t": 0.77554, "ic_2024": 0.0002, "ic_2025": 0.01511, "ic": 0.00964, "calls": 0.48169, "book": null, "me": false}, {"name": "Reversal, 1 month", "h": 20, "ic_trad": 0.01503, "ic_trad_t": 0.99791, "ic_2024": -0.00859, "ic_2025": 0.0465, "ic": 0.00842, "calls": 0.48675, "book": null, "me": false}, {"name": "Momentum, 12-1 months", "h": 20, "ic_trad": -0.00067, "ic_trad_t": -0.0335, "ic_2024": -0.00481, "ic_2025": 0.00485, "ic": 0.01318, "calls": 0.51103, "book": null, "me": false}, {"name": "Near 52-week high", "h": 20, "ic_trad": 0.0318, "ic_trad_t": 1.68593, "ic_2024": 0.04419, "ic_2025": 0.0153, "ic": 0.04318, "calls": 0.58298, "book": null, "me": false}, {"name": "Low volatility factor", "h": 20, "ic_trad": 0.08561, "ic_trad_t": 4.46411, "ic_2024": 0.06575, "ic_2025": 0.11206, "ic": 0.08365, "calls": 0.54626, "book": null, "me": false}, {"name": "Random score", "h": 20, "ic_trad": 0.0025, "ic_trad_t": 1.87445, "ic_2024": 0.00139, "ic_2025": 0.00398, "ic": 0.00271, "calls": 0.49946, "book": null, "me": false}];
+const $ = s => document.querySelector(s);
+const fmt = (v, d = 4) => v == null || isNaN(v) ? "–" : v.toFixed(d);
+let H = 1, sortKey = "ic_trad", sortDir = -1;
+try { const t = localStorage.getItem("sj-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+$("#theme").onclick = () => {
+  const cur = document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const nxt = cur === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = nxt;
+  try { localStorage.setItem("sj-theme", nxt); } catch (e) {}
+};
+function rows() { return DATA.filter(r => r.h === H); }
+function drawChart() {
+  const rs = rows().slice().sort((a, b) => b.ic_trad - a.ic_trad);
+  const lo = Math.min(0, ...rs.map(r => r.ic_trad)) * 1.15, hi = Math.max(...rs.map(r => r.ic_trad)) * 1.12;
+  const pct = v => (v - lo) / (hi - lo) * 100;
+  $("#chart").innerHTML = rs.map((r, i) => {
+    const z = pct(0), x = pct(r.ic_trad), neg = r.ic_trad < 0;
+    const left = neg ? x : z, width = Math.abs(x - z);
+    return `<div class="row${r.me ? " me" : ""}${r.name.includes(" part:") ? " part" : ""}" data-i="${i}"><div class="lab">${r.name}</div><div class="track">
+      <div class="zero" style="left:${z}%"></div>
+      <div class="bar${neg ? " neg" : ""}" style="left:${left}%;width:${width}%"></div>
+      <div class="val" style="left:calc(${Math.max(x, z)}% + 6px)">${fmt(r.ic_trad)}</div></div></div>`;
+  }).join("");
+  const tip = $("#tip");
+  document.querySelectorAll("#chart .row").forEach(el => {
+    const r = rs[+el.dataset.i];
+    el.onmousemove = ev => {
+      tip.innerHTML = `<b>${r.name}</b><br>IC ${H}-day: ${fmt(r.ic_trad)} (t ${fmt(r.ic_trad_t, 1)})<br>2024: ${fmt(r.ic_2024)} · 2025: ${fmt(r.ic_2025)}<br>Calls right: ${fmt(r.calls * 100, 1)} %` +
+        (H === 1 && r.book != null ? `<br>Book: ${r.book >= 0 ? "+" : ""}${fmt(r.book * 100, 3)} % a day` : "");
+      const box = $("#board .wrap").getBoundingClientRect();
+      tip.style.left = Math.min(ev.clientX - box.left + 14, box.width - 300) + "px";
+      tip.style.top = (ev.clientY - box.top + 14) + "px";
+      tip.style.opacity = 1;
+    };
+    el.onmouseleave = () => tip.style.opacity = 0;
+  });
+}
+function drawTable() {
+  const rs = rows().slice().sort((a, b) => {
+    const x = a[sortKey], y = b[sortKey];
+    if (typeof x === "string") return sortDir * x.localeCompare(y);
+    return sortDir * ((x ?? -9) - (y ?? -9));
+  });
+  $("#tbl tbody").innerHTML = rs.map(r => `<tr class="${r.me ? "me" : ""}"><td>${r.name}</td><td>${fmt(r.ic_trad)}</td><td>${fmt(r.ic_2024)}</td><td>${fmt(r.ic_2025)}</td>
+    <td>${fmt(r.ic)}</td><td>${fmt(r.calls * 100, 1)} %</td><td>${H === 1 && r.book != null ? (r.book >= 0 ? "+" : "") + fmt(r.book * 100, 3) : "–"}</td></tr>`).join("");
+  document.querySelectorAll("#tbl th").forEach(th => th.dataset.k === sortKey ? th.setAttribute("aria-sort", sortDir < 0 ? "descending" : "ascending") : th.removeAttribute("aria-sort"));
+}
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
+  H = +b.dataset.h;
+  document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  drawChart(); drawTable();
+});
+document.querySelectorAll("#tbl th").forEach(th => th.onclick = () => {
+  const k = th.dataset.k;
+  sortDir = k === sortKey ? -sortDir : (k === "name" ? 1 : -1); sortKey = k; drawTable();
+});
+drawChart(); drawTable();
+</script>
+</body>
+</html>
