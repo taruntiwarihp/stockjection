@@ -1,0 +1,9 @@
+stage,date,ic_all_1d,ic_all_5d,ic_all_20d
+"Random score",-,0.001,0.002,0.003
+"Best public factor (1-day reversal)",-,0.041,0.035,0.010
+"Starting point: LightGBM, standard inputs",Oct 2026,0.110,0.110,0.118
+"Stockjection v1",early Nov 2026,0.120,0.118,0.133
+"Stockjection v2",19 Nov 2026,0.126,0.122,0.136
+"Stockjection, live",22 Nov 2026,0.126,0.126,0.137
+"Stockjection, next version (shadow test)",23 Nov 2026,0.134,0.131,-
+"Stockjection, newest candidate (shadow test)",24 Nov 2026,0.136,0.131,0.138

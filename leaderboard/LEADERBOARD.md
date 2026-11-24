@@ -49,6 +49,26 @@ Same NSE stocks (EQ series, 20-session mean traded value of at least Rs 10 crore
 | 9 | Random score | 0.0025 (+1.9) | 0.0014 / 0.0040 | 0.0027 | 49.9% |
 | 10 | Momentum, 12-1 months | -0.0007 (-0.0) | -0.0048 / 0.0048 | 0.0132 | 51.1% |
 
+## Progress over time
+
+Same dates (January 2024 to September 2025) and same scoring for every stage. IC here is over **all stocks** (the
+"IC all stocks" column above), because it is the one measure recorded for every stage.
+
+| Stage | Date | IC 1 day | IC 5 days | IC 20 days |
+|---|---|---|---|---|
+| Random score | - | 0.001 | 0.002 | 0.003 |
+| Best public factor (1-day reversal) | - | 0.041 | 0.035 | 0.010 |
+| Starting point: LightGBM, standard inputs | Oct 2026 | 0.110 | 0.110 | 0.118 |
+| Stockjection v1 | early Nov 2026 | 0.120 | 0.118 | 0.133 |
+| Stockjection v2 | 19 Nov 2026 | 0.126 | 0.122 | 0.136 |
+| **Stockjection, live** | 22 Nov 2026 | **0.126** | **0.126** | **0.137** |
+| Stockjection, next version (shadow test) | 23 Nov 2026 | 0.134 | 0.131 | - |
+| Stockjection, newest candidate (shadow test) | 24 Nov 2026 | **0.136** | 0.131 | 0.138 |
+
+- 1 day: **+23 %** over the standard LightGBM starting point, and over 3 times the best public factor.
+- A shadow-test version runs every night beside the live one and replaces it only after at least 10 scored live days.
+- Each new stage was chosen on these same dates, so later stages are optimistic until the live record confirms them.
+
 Nine pretrained time-series forecasting models (Chronos-2, TimesFM-3, Moirai-2, TiRex, Sundial, Toto, Kronos, Time-MoE and others), tested zero-shot and fine-tuned on Indian daily price bars, showed no skill: none beat a no-change forecast, and direction accuracy was about 50 %.
 
 The next version was chosen on these same dates, so its lead is optimistic. Private and commercial models publish no comparable record.

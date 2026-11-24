@@ -59,6 +59,9 @@ rank correlation between a model's score and each stock's next return relative t
 | 8 | Random score | 0.0004 | 0.0008 | 0.0025 | 49.9 % | −0.285 (−7.9) |
 | – | 9 pretrained AI forecasters (Chronos-2, TimesFM-3, Moirai-2, TiRex, Sundial, Toto, Kronos, Time-MoE, …) | no skill: none beat a "no change" forecast; about 50 % direction | | | | |
 
+**Progress so far (1-day IC, all stocks):** standard LightGBM 0.110 → Stockjection v1 0.120 → v2 0.126 → live 0.126 →
+newest candidate in shadow test **0.136** (+23 %). Stage table: [leaderboard/LEADERBOARD.md#progress-over-time](leaderboard/LEADERBOARD.md#progress-over-time).
+
 Full table with per-year results: [leaderboard/LEADERBOARD.md](leaderboard/LEADERBOARD.md).
 
 **Read this with care**
